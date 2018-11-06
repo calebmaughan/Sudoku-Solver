@@ -69,9 +69,10 @@ namespace Sudoku_Solver
                             new SingleCandidate().Solve(row.Squares[j], puzzle, grid);
                         }
                     }
-                    if (puzzle.squares[block.Squares[j]].number == '-')
+                    if (puzzle.squares[block.Squares[j]].number == '-' && puzzle.squares[block.Squares[j]].candidates.Contains(solution.ToString()))
                     {
-                        if (puzzle.squares[block.Squares[j]].candidates.Count == 2 && puzzle.squares[block.Squares[j]].candidates.Contains(solution.ToString()))
+                        puzzle.squares[block.Squares[j]].candidates.Remove(solution.ToString());
+                        if (puzzle.squares[block.Squares[j]].candidates.Count == 1)
                         {
                             new SingleCandidate().Solve(block.Squares[j], puzzle, grid);
                         }
