@@ -23,12 +23,25 @@ namespace Sudoku_Solver
             }
         }
 
-        public void debugWrite()
+        public Dictionary<string, int> findContainers(int square)
         {
-            for(int i = 0; i < columns[1].Squares.Count; i++)
+            Dictionary<string, int> returnList = new Dictionary<string, int>();
+            for(int i = 0; i < blocks.Count; i++)
             {
-                Console.Write(columns[1].Squares[i] + " ");
+                if (blocks[i].Squares.Contains(square))
+                {
+                    returnList.Add("Block", i);
+                }
+                if (rows[i].Squares.Contains(square))
+                {
+                    returnList.Add("Row", i);
+                }
+                if (columns[i].Squares.Contains(square))
+                {
+                    returnList.Add("Column", i);
+                }
             }
+            return returnList;
         }
     }
 }

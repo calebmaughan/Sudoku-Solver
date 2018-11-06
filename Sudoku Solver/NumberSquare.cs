@@ -12,9 +12,20 @@ namespace Sudoku_Solver
         public NumberSquare(char num, List<String> master)
         {
             number = num;
+            if(!master.Contains(num.ToString()) && num != '-')
+            {
+                throw new Exception();
+            }
             if(num == '-')
             {
-                candidates = master;
+                candidates = new List<string>(master);
+            }
+        }
+        public void removeCandidate(string cand)
+        {
+            if (candidates.Contains(cand))
+            {
+                candidates.Remove(cand);
             }
         }
     }
