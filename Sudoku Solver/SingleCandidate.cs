@@ -64,8 +64,10 @@ namespace Sudoku_Solver
                 {
                     if (puzzle.squares[row.Squares[j]].number == '-')
                     {
-                        if(puzzle.squares[row.Squares[j]].candidates.Count == 2 && puzzle.squares[row.Squares[j]].candidates.Contains(solution.ToString()))
+                        puzzle.squares[row.Squares[j]].candidates.Remove(solution.ToString());
+                        if(puzzle.squares[row.Squares[j]].candidates.Count == 1)
                         {
+                            Console.WriteLine("backtrack " + row.Squares[j]);
                             new SingleCandidate().Solve(row.Squares[j], puzzle, grid);
                         }
                     }
@@ -74,14 +76,17 @@ namespace Sudoku_Solver
                         puzzle.squares[block.Squares[j]].candidates.Remove(solution.ToString());
                         if (puzzle.squares[block.Squares[j]].candidates.Count == 1)
                         {
+                            Console.WriteLine("backtrack " + block.Squares[j]);
                             new SingleCandidate().Solve(block.Squares[j], puzzle, grid);
                         }
                     }
-                    if (puzzle.squares[block.Squares[j]].number == '-')
+                    if (puzzle.squares[col.Squares[j]].number == '-')
                     {
-                        if (puzzle.squares[block.Squares[j]].candidates.Count == 2 && puzzle.squares[block.Squares[j]].candidates.Contains(solution.ToString()))
+                        puzzle.squares[col.Squares[j]].candidates.Remove(solution.ToString());
+                        if (puzzle.squares[col.Squares[j]].candidates.Count == 1)
                         {
-                            new SingleCandidate().Solve(row.Squares[j], puzzle, grid);
+                            Console.WriteLine("backtrack " + col.Squares[j]);
+                            new SingleCandidate().Solve(col.Squares[j], puzzle, grid);
                         }
                     }
                 }

@@ -43,7 +43,39 @@ namespace Sudoku_Solver
                         new SingleCandidate().Solve(i, puzzle, structure);
                     }
                 }
-
+                for (int i = 0; i < puzzle.squares.Count; i++)
+                {
+                    Console.Write(puzzle.squares[i].number + " ");
+                    if ((i + 1) % puzzle.size == 0)
+                    {
+                        Console.Write("\n");
+                    }
+                }
+                Console.WriteLine("");
+                bool used = true;
+                bool solved = false;
+                int timesused = 0;
+                while (!solved && used)
+                {                    
+                    solved = true;
+                    used = false;
+                    for (int i = 0; i < puzzle.squares.Count; i++)
+                    {
+                        if (puzzle.squares[i].number == '-')
+                        {
+                            solved = false;
+                            new UniqueCandidate().Solve(i, puzzle, structure);
+                            if(puzzle.squares[i].number != '-')
+                            {
+                                used = true;
+                                timesused++;
+                                //Console.WriteLine(i);
+                            }
+                        }
+                    }                    
+                }
+                Console.WriteLine("Solved: " + solved);
+                Console.WriteLine("Unique Candidate used " + timesused + " times.");
                 for (int i = 0; i < puzzle.squares.Count; i++)
                 {
                     Console.Write(puzzle.squares[i].number + " ");
