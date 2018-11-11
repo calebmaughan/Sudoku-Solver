@@ -7,9 +7,7 @@ namespace Sudoku_Solver
 {
     class HiddenPair : SolutionAlgorithm
     {
-        PuzzleRow row { get; set; }
-        PuzzleBlock block { get; set; }
-        PuzzleColumn col { get; set; }
+        bool used { get; set; }
         bool skip { get; set; }
         List<int> rowPossible { get; set; }
         List<int> colPossible { get; set; }
@@ -53,10 +51,12 @@ namespace Sudoku_Solver
 
         public override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
+            used = false;
             if (!skip)
             {
                 if (blockPossible.Count == 1)
                 {
+                    used = true;
                     Console.WriteLine("hp used " + squareNum);
                     for (int i = 0; i < block.Squares.Count; i++)
                     {
@@ -74,6 +74,7 @@ namespace Sudoku_Solver
                 }
                 if (colPossible.Count == 1)
                 {
+                    used = true;
                     for (int i = 0; i < col.Squares.Count; i++)
                     {
                         if (puzzle.squares[col.Squares[i]].number == '-' && col.Squares[i] != squareNum && !colPossible.Contains(col.Squares[i]))
@@ -90,6 +91,7 @@ namespace Sudoku_Solver
                 }
                 if (rowPossible.Count == 1)
                 {
+                    used = true;
                     for (int i = 0; i < row.Squares.Count; i++)
                     {
                         if (puzzle.squares[row.Squares[i]].number == '-' && row.Squares[i] != squareNum && !rowPossible.Contains(row.Squares[i]))
@@ -107,7 +109,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public override void updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        public override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             if (!skip)
             {
@@ -115,27 +117,34 @@ namespace Sudoku_Solver
                 {
                     if (puzzle.squares[row.Squares[i]].number == '-' && puzzle.squares[row.Squares[i]].candidates.Count == 1)
                     {
-                        Console.WriteLine("backtrack " + row.Squares[i]);
-                        new SingleCandidate().Solve(row.Squares[i], puzzle, grid);
+                        SingleCandidate temp = new SingleCandidate();
+                        temp.Solve(row.Squares[i], puzzle, grid);
+                        SinglesUsed++;
+                        SinglesUsed += temp.SinglesUsed;
                     }
                 }
                 for (int i = 0; i < col.Squares.Count; i++)
                 {
                     if (puzzle.squares[col.Squares[i]].number == '-' && puzzle.squares[col.Squares[i]].candidates.Count == 1)
                     {
-                        Console.WriteLine("backtrack " + col.Squares[i]);
-                        new SingleCandidate().Solve(col.Squares[i], puzzle, grid);
+                        SingleCandidate temp = new SingleCandidate();
+                        temp.Solve(row.Squares[i], puzzle, grid);
+                        SinglesUsed++;
+                        SinglesUsed += temp.SinglesUsed;
                     }
                 }
                 for (int i = 0; i < block.Squares.Count; i++)
                 {
                     if (puzzle.squares[block.Squares[i]].number == '-' && puzzle.squares[block.Squares[i]].candidates.Count == 1)
                     {
-                        Console.WriteLine("backtrack " + block.Squares[i]);
-                        new SingleCandidate().Solve(block.Squares[i], puzzle, grid);
+                        SingleCandidate temp = new SingleCandidate();
+                        temp.Solve(row.Squares[i], puzzle, grid);
+                        SinglesUsed++;
+                        SinglesUsed += temp.SinglesUsed;
                     }
                 }
             }
+            return used;
         }
     }
 }

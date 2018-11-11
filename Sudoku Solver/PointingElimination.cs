@@ -17,7 +17,7 @@ namespace Sudoku_Solver
             throw new NotImplementedException();
         }
 
-        public override void updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        public override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             if (used)
             {
@@ -25,11 +25,14 @@ namespace Sudoku_Solver
                 {
                     if (puzzle.squares[i].number == '-' && puzzle.squares[i].candidates.Count == 1)
                     {
-                        new SingleCandidate().Solve(i, puzzle, grid);
-                        Console.WriteLine("backtrack " + i);
+                        SingleCandidate temp = new SingleCandidate();
+                        temp.Solve(i, puzzle, grid);
+                        SinglesUsed++;
+                        SinglesUsed += temp.SinglesUsed;
                     }
                 }
             }
+            return used;
         }
     }
 }

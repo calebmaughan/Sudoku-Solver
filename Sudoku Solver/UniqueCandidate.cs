@@ -10,9 +10,6 @@ namespace Sudoku_Solver
         Dictionary<char, int> rowCandidates { get; set; }
         Dictionary<char, int> colCandidates { get; set; }
         Dictionary<char, int> candidateCount { get; set; }
-        PuzzleRow row { get; set; }
-        PuzzleBlock block { get; set; }
-        PuzzleColumn col { get; set; }
 
         public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
@@ -120,10 +117,12 @@ namespace Sudoku_Solver
             }
         }
 
-        public override void updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        public override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
+            bool used = false;
             if(candidateCount.Count == 1)
             {
+                used = true;
                 char answer = ' ';
                 foreach (KeyValuePair<char, int> pair in candidateCount)
                 {
@@ -138,8 +137,10 @@ namespace Sudoku_Solver
                         puzzle.squares[row.Squares[i]].candidates.Remove(answer.ToString());
                         if(puzzle.squares[row.Squares[i]].candidates.Count == 1)
                         {
-                            Console.WriteLine("backtrack " + row.Squares[i]);
-                            new SingleCandidate().Solve(row.Squares[i], puzzle, grid);
+                            SingleCandidate temp = new SingleCandidate();
+                            temp.Solve(row.Squares[i], puzzle, grid);
+                            SinglesUsed++;
+                            SinglesUsed += temp.SinglesUsed;
                         }
                     }
                 }
@@ -150,8 +151,10 @@ namespace Sudoku_Solver
                         puzzle.squares[col.Squares[i]].candidates.Remove(answer.ToString());
                         if (puzzle.squares[col.Squares[i]].candidates.Count == 1)
                         {
-                            Console.WriteLine("backtrack " + col.Squares[i]);
-                            new SingleCandidate().Solve(col.Squares[i], puzzle, grid);
+                            SingleCandidate temp = new SingleCandidate();
+                            temp.Solve(row.Squares[i], puzzle, grid);
+                            SinglesUsed++;
+                            SinglesUsed += temp.SinglesUsed;
                         }
                     }
                 }
@@ -162,20 +165,15 @@ namespace Sudoku_Solver
                         puzzle.squares[block.Squares[i]].candidates.Remove(answer.ToString());
                         if (puzzle.squares[block.Squares[i]].candidates.Count == 1)
                         {
-                            Console.WriteLine("backtrack " + block.Squares[i]);
-                            new SingleCandidate().Solve(block.Squares[i], puzzle, grid);
+                            SingleCandidate temp = new SingleCandidate();
+                            temp.Solve(row.Squares[i], puzzle, grid);
+                            SinglesUsed++;
+                            SinglesUsed += temp.SinglesUsed;
                         }
                     }
                 }
-                for (int i = 0; i < puzzle.squares.Count; i++)
-                {
-                    Console.Write(puzzle.squares[i].number + " ");
-                    if ((i + 1) % puzzle.size == 0)
-                    {
-                        Console.Write("\n");
-                    }
-                }
-            }   
+            }
+            return used;
         }
     }
 }

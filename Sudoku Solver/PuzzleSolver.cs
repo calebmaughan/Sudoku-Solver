@@ -9,6 +9,7 @@ namespace Sudoku_Solver
         PuzzleNumbers puzzle { get; set; }
         PuzzleStructure structure { get; set; }
         bool invalid { get; set; }
+        Dictionary <string, SolutionAlgorithm> algorithms { get; set; }
 
         public PuzzleSolver(string input)
         {
@@ -28,8 +29,20 @@ namespace Sudoku_Solver
                 Console.WriteLine("Invalid Puzzle");
                 invalid = true;
             }
-
+            InitializeDictionary();
             Solve();
+        }
+
+        void InitializeDictionary()
+        {
+            algorithms = new Dictionary<string, SolutionAlgorithm>();
+            algorithms.Add("Single", new SingleCandidate());
+            algorithms.Add("Unique", new UniqueCandidate());
+            algorithms.Add("Hidden", new HiddenPair());
+            algorithms.Add("Block Row", new BlockRows());
+            algorithms.Add("Block Column", new BlockCols());
+            algorithms.Add("Column Elimination", new ColumnElimination());
+            algorithms.Add("Row Elimination", new RowElimination());
         }
 
         public void Solve()

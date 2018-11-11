@@ -9,9 +9,6 @@ namespace Sudoku_Solver
 {
     public class ColumnElimination : PointingElimination
     {
-        PuzzleRow row { get; set; }
-        PuzzleBlock block { get; set; }
-        PuzzleColumn col { get; set; }
         Dictionary<int, List<string>> colBlock { get; set; }
 
         public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)

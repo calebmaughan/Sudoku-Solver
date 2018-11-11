@@ -7,9 +7,7 @@ namespace Sudoku_Solver
     class SingleCandidate : SolutionAlgorithm
     {
         List<char> duplicates { get; set; }
-        PuzzleRow row { get; set; }
-        PuzzleBlock block { get; set; }
-        PuzzleColumn col { get; set; }
+
 
         public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
@@ -53,13 +51,15 @@ namespace Sudoku_Solver
             }
         }
 
-        public override void updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        public override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
+            bool used = false;
             char solution;
             if(puzzle.squares[squareNum].candidates.Count == 1)
             {
                 solution = (puzzle.squares[squareNum].candidates[0].ToCharArray())[0];
-                puzzle.squares[squareNum].number = (puzzle.squares[squareNum].candidates[0].ToCharArray())[0];                
+                puzzle.squares[squareNum].number = solution;
+                used = true;
                 for (int j = 0; j < row.Squares.Count; j++)
                 {
                     if (puzzle.squares[row.Squares[j]].number == '-')
@@ -67,8 +67,10 @@ namespace Sudoku_Solver
                         puzzle.squares[row.Squares[j]].candidates.Remove(solution.ToString());
                         if(puzzle.squares[row.Squares[j]].candidates.Count == 1)
                         {
-                            Console.WriteLine("backtrack " + row.Squares[j]);
-                            new SingleCandidate().Solve(row.Squares[j], puzzle, grid);
+                            SingleCandidate temp = new SingleCandidate();
+                            temp.Solve(row.Squares[j], puzzle, grid);
+                            SinglesUsed++;
+                            SinglesUsed += temp.SinglesUsed;
                         }
                     }
                     if (puzzle.squares[block.Squares[j]].number == '-' && puzzle.squares[block.Squares[j]].candidates.Contains(solution.ToString()))
@@ -76,8 +78,10 @@ namespace Sudoku_Solver
                         puzzle.squares[block.Squares[j]].candidates.Remove(solution.ToString());
                         if (puzzle.squares[block.Squares[j]].candidates.Count == 1)
                         {
-                            Console.WriteLine("backtrack " + block.Squares[j]);
-                            new SingleCandidate().Solve(block.Squares[j], puzzle, grid);
+                            SingleCandidate temp = new SingleCandidate();
+                            temp.Solve(row.Squares[j], puzzle, grid);
+                            SinglesUsed++;
+                            SinglesUsed += temp.SinglesUsed;
                         }
                     }
                     if (puzzle.squares[col.Squares[j]].number == '-')
@@ -85,13 +89,15 @@ namespace Sudoku_Solver
                         puzzle.squares[col.Squares[j]].candidates.Remove(solution.ToString());
                         if (puzzle.squares[col.Squares[j]].candidates.Count == 1)
                         {
-                            Console.WriteLine("backtrack " + col.Squares[j]);
-                            new SingleCandidate().Solve(col.Squares[j], puzzle, grid);
+                            SingleCandidate temp = new SingleCandidate();
+                            temp.Solve(row.Squares[j], puzzle, grid);
+                            SinglesUsed++;
+                            SinglesUsed += temp.SinglesUsed;
                         }
                     }
                 }
             }
-
+            return used;
         }
     }
 }

@@ -7,9 +7,6 @@ namespace Sudoku_Solver
 {
     public class BlockCols : PointingElimination
     {
-        PuzzleRow row { get; set; }
-        PuzzleBlock block { get; set; }
-        PuzzleColumn col { get; set; }
         Dictionary<int, List<string>> blockCol { get; set; }
 
         public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
