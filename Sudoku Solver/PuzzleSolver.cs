@@ -102,8 +102,40 @@ namespace Sudoku_Solver
                         }
                     }
                 }
-
+                //new BlockRows().Solve(13, puzzle, structure);
                 for(int i = 0; i < puzzle.squares.Count; i++)
+                {
+                    new BlockRows().Solve(i, puzzle, structure);
+                    new BlockCols().Solve(i, puzzle, structure);
+                    new ColumnElimination().Solve(i, puzzle, structure);
+                    new RowElimination().Solve(i, puzzle, structure);
+                }
+                //new BlockCols().Solve()
+
+                used = true;
+                solved = false;
+                //int timesused = 0;
+                while (!solved && used)
+                {
+                    solved = true;
+                    used = false;
+                    for (int i = 0; i < puzzle.squares.Count; i++)
+                    {
+                        if (puzzle.squares[i].number == '-')
+                        {
+                            solved = false;
+                            new UniqueCandidate().Solve(i, puzzle, structure);
+                            if (puzzle.squares[i].number != '-')
+                            {
+                                used = true;
+                                timesused++;
+                                //Console.WriteLine(i);
+                            }
+                        }
+                    }
+                }
+
+                for (int i = 0; i < puzzle.squares.Count; i++)
                 {
                     new BlockRows().Solve(i, puzzle, structure);
                     new BlockCols().Solve(i, puzzle, structure);

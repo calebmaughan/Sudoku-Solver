@@ -41,7 +41,29 @@ namespace Sudoku_Solver
             List<string> temp = new List<string>();
             for (int i = 0; i < colBlock.Count; i++)
             {
-                temp = colBlock[i].Except(temp).Concat(temp.Except(colBlock[i])).ToList<string>();
+                List<string> temp2 = new List<string>();
+                for (int j = 0; j < colBlock[i].Count; j++)
+                {
+                    if (!temp2.Contains(colBlock[i][j]))
+                    {
+                        temp2.Add(colBlock[i][j]);
+                    }
+                }
+                for (int j = 0; j < colBlock.Count; j++)
+                {
+                    if (j != i)
+                    {
+                        for (int k = 0; k < colBlock[j].Count; k++)
+                        {
+                            if (temp2.Contains(colBlock[j][k]))
+                            {
+                                temp2.Remove(colBlock[j][k]);
+                            }
+                        }
+
+                    }
+                }
+                temp = temp.Concat(temp2).ToList<string>();
             }
             for (int i = 0; i < colBlock.Count; i++)
             {

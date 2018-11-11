@@ -14,6 +14,10 @@ namespace Sudoku_Solver
 
         public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
+            if(squareNum == 13)
+            {
+
+            }
             used = false;
             Dictionary<string, int> containers = grid.findContainers(squareNum);
             row = grid.rows[containers["Row"]];
@@ -40,7 +44,29 @@ namespace Sudoku_Solver
             List<string> temp = new List<string>();
             for(int i = 0; i < blockRow.Count; i++)
             {
-                temp = blockRow[i].Except(temp).Concat(temp.Except(blockRow[i])).ToList<string>();
+                List<string> temp2 = new List<string>();
+                for(int j = 0; j < blockRow[i].Count; j++)
+                {
+                    if (!temp2.Contains(blockRow[i][j]))
+                    {
+                        temp2.Add(blockRow[i][j]);
+                    }
+                }
+                for(int j = 0; j < blockRow.Count; j++)
+                {
+                    if(j != i)
+                    {
+                        for(int k = 0; k < blockRow[j].Count; k++)
+                        {
+                            if (temp2.Contains(blockRow[j][k]))
+                            {
+                                temp2.Remove(blockRow[j][k]);
+                            }
+                        }
+                        
+                    }
+                }
+                temp = temp.Concat(temp2).ToList<string>();
             }
             //You need to except off the stuff you havent excepted off of!
             for(int i = 0; i < blockRow.Count; i++)
