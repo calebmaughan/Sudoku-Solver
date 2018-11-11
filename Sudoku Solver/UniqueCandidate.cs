@@ -23,14 +23,10 @@ namespace Sudoku_Solver
             blockCandidates = new Dictionary<char, int>();
             rowCandidates = new Dictionary<char, int>();
             colCandidates = new Dictionary<char, int>();
-            rowCandidates.Add('-', 0);
-            colCandidates.Add('-', 0);
-            blockCandidates.Add('-', 0);
-            for (int i = 0; i < row.Squares.Count; i++)            {
-
+            for (int i = 0; i < row.Squares.Count; i++)
+            {
                 if (puzzle.squares[row.Squares[i]].number == '-' && row.Squares[i] != squareNum)
                 {
-                    rowCandidates['-']++;
                     for (int j = 0; j < puzzle.squares[row.Squares[i]].candidates.Count; j++)
                     {
                         if (!rowCandidates.ContainsKey(puzzle.squares[row.Squares[i]].candidates[j].ToCharArray()[0]))
@@ -45,7 +41,6 @@ namespace Sudoku_Solver
                 }
                 if (puzzle.squares[col.Squares[i]].number == '-' && col.Squares[i] != squareNum)
                 {
-                    colCandidates['-']++;
                     for (int j = 0; j < puzzle.squares[col.Squares[i]].candidates.Count; j++)
                     {
                         if (!colCandidates.ContainsKey(puzzle.squares[col.Squares[i]].candidates[j].ToCharArray()[0]))
@@ -60,7 +55,6 @@ namespace Sudoku_Solver
                 }
                 if (puzzle.squares[block.Squares[i]].number == '-' && block.Squares[i] != squareNum)
                 {
-                    blockCandidates['-']++;
                     for (int j = 0; j < puzzle.squares[block.Squares[i]].candidates.Count; j++)
                     {
                         if (!blockCandidates.ContainsKey(puzzle.squares[block.Squares[i]].candidates[j].ToCharArray()[0]))
@@ -79,10 +73,6 @@ namespace Sudoku_Solver
 
         public override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
-            if(squareNum == 61)
-            {
-                //this is a test
-            }
             candidateCount = new Dictionary<char, int>();
 
             for(int i = 0; i < puzzle.squares[squareNum].candidates.Count; i++)
@@ -90,9 +80,6 @@ namespace Sudoku_Solver
                 candidateCount.Add(puzzle.squares[squareNum].candidates[i].ToCharArray()[0], 0);
             }
             Dictionary<char, int> tempCount = new Dictionary<char, int>(candidateCount);
-            //possibleCandidates = new List<string>();
-            int otherSquares = rowCandidates['-'];
-            rowCandidates.Remove('-');
             foreach(KeyValuePair<char, int> pair in rowCandidates)
             {
                 if (tempCount.ContainsKey(pair.Key) && tempCount[pair.Key] == 0)
@@ -106,8 +93,6 @@ namespace Sudoku_Solver
                 return;
             }
             tempCount = new Dictionary<char, int>(candidateCount);
-            otherSquares = colCandidates['-'];
-            colCandidates.Remove('-');
             foreach (KeyValuePair<char, int> pair in colCandidates)
             {
                 if (tempCount.ContainsKey(pair.Key) && tempCount[pair.Key] == 0)
@@ -120,8 +105,6 @@ namespace Sudoku_Solver
                 candidateCount = tempCount;
                 return;
             }
-            otherSquares = blockCandidates['-'];
-            blockCandidates.Remove('-');
             tempCount = new Dictionary<char, int>(candidateCount);
             foreach (KeyValuePair<char, int> pair in blockCandidates)
             {
