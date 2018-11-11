@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sudoku_Solver
 {
@@ -9,6 +11,8 @@ namespace Sudoku_Solver
             Console.WriteLine("Welcome to the Sudoku Solver!\nPress the enter key to exit.");
 
             new PuzzleSolver(@"C:\Users\cmaug\Desktop\testpuzzle.txt");
+
+
 
             Console.Read();
         }
