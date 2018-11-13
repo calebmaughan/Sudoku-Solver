@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Sudoku_Solver
 {
+    [Serializable()]
     public class NumberSquare
     {
         public List<string> candidates { get; set; }
@@ -23,7 +24,7 @@ namespace Sudoku_Solver
         }
         public void removeCandidate(string cand)
         {
-            if (candidates.Contains(cand))
+            if (candidates != null && candidates.Contains(cand))
             {
                 candidates.Remove(cand);
             }

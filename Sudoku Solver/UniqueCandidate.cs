@@ -129,7 +129,6 @@ namespace Sudoku_Solver
                     answer = pair.Key;
                 }
                 puzzle.squares[squareNum].number = answer;
-                Console.WriteLine("used uc for " + squareNum);
                 for(int i = 0; i < row.Squares.Count; i++)
                 {
                     if (puzzle.squares[row.Squares[i]].number == '-' && puzzle.squares[row.Squares[i]].candidates.Contains(answer.ToString()))

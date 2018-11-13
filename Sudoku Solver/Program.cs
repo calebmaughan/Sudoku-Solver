@@ -8,12 +8,11 @@ namespace Sudoku_Solver
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the Sudoku Solver!\nPress the enter key to exit.");
-
-            new PuzzleSolver(@"C:\Users\cmaug\Desktop\testpuzzle.txt");
-
-
-
+            Console.WriteLine("Welcome to the Sudoku Solver!\nPlease enter an input file:");
+            string input = Console.ReadLine();
+            Console.WriteLine("Please enter an output file (or leave empty to display on the console):");
+            string output = Console.ReadLine();
+            new PuzzleSolver(input, output);
             Console.Read();
         }
     }

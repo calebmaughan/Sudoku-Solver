@@ -55,7 +55,7 @@ namespace Sudoku_Solver
         {
             bool used = false;
             char solution;
-            if(puzzle.squares[squareNum].candidates.Count == 1)
+            if(puzzle.squares[squareNum].number == '-' && puzzle.squares[squareNum].candidates.Count == 1)
             {
                 solution = (puzzle.squares[squareNum].candidates[0].ToCharArray())[0];
                 puzzle.squares[squareNum].number = solution;
@@ -65,7 +65,7 @@ namespace Sudoku_Solver
                     if (puzzle.squares[row.Squares[j]].number == '-')
                     {
                         puzzle.squares[row.Squares[j]].candidates.Remove(solution.ToString());
-                        if(puzzle.squares[row.Squares[j]].candidates.Count == 1)
+                        if(puzzle.squares[row.Squares[j]].candidates.Count == 1 && puzzle.squares[row.Squares[j]].number == '-')
                         {
                             SingleCandidate temp = new SingleCandidate();
                             temp.Solve(row.Squares[j], puzzle, grid);
@@ -76,7 +76,7 @@ namespace Sudoku_Solver
                     if (puzzle.squares[block.Squares[j]].number == '-' && puzzle.squares[block.Squares[j]].candidates.Contains(solution.ToString()))
                     {
                         puzzle.squares[block.Squares[j]].candidates.Remove(solution.ToString());
-                        if (puzzle.squares[block.Squares[j]].candidates.Count == 1)
+                        if (puzzle.squares[block.Squares[j]].candidates.Count == 1 && puzzle.squares[block.Squares[j]].number == '-')
                         {
                             SingleCandidate temp = new SingleCandidate();
                             temp.Solve(row.Squares[j], puzzle, grid);
@@ -87,7 +87,7 @@ namespace Sudoku_Solver
                     if (puzzle.squares[col.Squares[j]].number == '-')
                     {
                         puzzle.squares[col.Squares[j]].candidates.Remove(solution.ToString());
-                        if (puzzle.squares[col.Squares[j]].candidates.Count == 1)
+                        if (puzzle.squares[col.Squares[j]].candidates.Count == 1 && puzzle.squares[col.Squares[j]].number == '-')
                         {
                             SingleCandidate temp = new SingleCandidate();
                             temp.Solve(row.Squares[j], puzzle, grid);

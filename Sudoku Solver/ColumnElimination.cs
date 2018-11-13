@@ -13,6 +13,7 @@ namespace Sudoku_Solver
 
         public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
+            used = false;
             Dictionary<string, int> containers = grid.findContainers(squareNum);
             row = grid.rows[containers["Row"]];
             block = grid.blocks[containers["Block"]];
@@ -84,7 +85,7 @@ namespace Sudoku_Solver
                                 if (puzzle.squares[update.Squares[j]].candidates.Contains(colBlock[i][k]))
                                 {
                                     puzzle.squares[update.Squares[j]].candidates.Remove(colBlock[i][k]);
-                                    Console.WriteLine("ce used " + squareNum);
+                                    used = true;
                                 }
                             }
                         }

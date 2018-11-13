@@ -84,7 +84,6 @@ namespace Sudoku_Solver
                                 if (puzzle.squares[update.Squares[j]].candidates.Contains(blockCol[i][k]))
                                 {
                                     puzzle.squares[update.Squares[j]].candidates.Remove(blockCol[i][k]);
-                                    Console.WriteLine("bc used " + squareNum);
                                     used = true;
                                 }
                             }

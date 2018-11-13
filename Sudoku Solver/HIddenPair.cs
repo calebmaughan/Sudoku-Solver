@@ -56,8 +56,6 @@ namespace Sudoku_Solver
             {
                 if (blockPossible.Count == 1)
                 {
-                    used = true;
-                    Console.WriteLine("hp used " + squareNum);
                     for (int i = 0; i < block.Squares.Count; i++)
                     {
                         if (puzzle.squares[block.Squares[i]].number == '-' && block.Squares[i] != squareNum && !blockPossible.Contains(block.Squares[i]))
@@ -67,6 +65,7 @@ namespace Sudoku_Solver
                                 if (puzzle.squares[block.Squares[i]].candidates.Contains(puzzle.squares[squareNum].candidates[j]))
                                 {
                                     puzzle.squares[block.Squares[i]].candidates.Remove(puzzle.squares[squareNum].candidates[j]);
+                                    used = true;
                                 }
                             }
                         }
@@ -74,7 +73,7 @@ namespace Sudoku_Solver
                 }
                 if (colPossible.Count == 1)
                 {
-                    used = true;
+                    
                     for (int i = 0; i < col.Squares.Count; i++)
                     {
                         if (puzzle.squares[col.Squares[i]].number == '-' && col.Squares[i] != squareNum && !colPossible.Contains(col.Squares[i]))
@@ -84,6 +83,7 @@ namespace Sudoku_Solver
                                 if (puzzle.squares[col.Squares[i]].candidates.Contains(puzzle.squares[squareNum].candidates[j]))
                                 {
                                     puzzle.squares[col.Squares[i]].candidates.Remove(puzzle.squares[squareNum].candidates[j]);
+                                    used = true;
                                 }
                             }
                         }
@@ -91,7 +91,7 @@ namespace Sudoku_Solver
                 }
                 if (rowPossible.Count == 1)
                 {
-                    used = true;
+                    
                     for (int i = 0; i < row.Squares.Count; i++)
                     {
                         if (puzzle.squares[row.Squares[i]].number == '-' && row.Squares[i] != squareNum && !rowPossible.Contains(row.Squares[i]))
@@ -101,6 +101,7 @@ namespace Sudoku_Solver
                                 if (puzzle.squares[row.Squares[i]].candidates.Contains(puzzle.squares[squareNum].candidates[j]))
                                 {
                                     puzzle.squares[row.Squares[i]].candidates.Remove(puzzle.squares[squareNum].candidates[j]);
+                                    used = true;
                                 }
                             }
                         }

@@ -89,7 +89,6 @@ namespace Sudoku_Solver
                                 {
                                     used = true;
                                     puzzle.squares[update.Squares[j]].candidates.Remove(blockRow[i][k]);
-                                    Console.WriteLine("br used " + squareNum);
                                 }
                             }
                         }
