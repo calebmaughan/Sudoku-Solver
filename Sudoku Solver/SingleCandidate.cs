@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Sudoku_Solver
 {
-    class SingleCandidate : SolutionAlgorithm
+    public class SingleCandidate : SolutionAlgorithm
     {
         List<char> duplicates { get; set; }
 
 
-        public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             Dictionary<string, int> containers = grid.findContainers(squareNum);
             row = grid.rows[containers["Row"]];
@@ -42,16 +42,16 @@ namespace Sudoku_Solver
             }
         }
 
-        public override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             for(int i = 0; i < duplicates.Count; i++)
             {
                 string candidate = duplicates[i].ToString();
-                puzzle.squares[squareNum].removeCandidate(candidate);
+                puzzle.squares[squareNum].candidates.Remove(candidate);
             }
         }
 
-        public override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             bool used = false;
             char solution;

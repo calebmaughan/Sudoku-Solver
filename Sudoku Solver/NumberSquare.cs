@@ -22,12 +22,5 @@ namespace Sudoku_Solver
                 candidates = new List<string>(master);
             }
         }
-        public void removeCandidate(string cand)
-        {
-            if (candidates != null && candidates.Contains(cand))
-            {
-                candidates.Remove(cand);
-            }
-        }
     }
 }

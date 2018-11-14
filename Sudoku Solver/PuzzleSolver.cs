@@ -10,6 +10,7 @@ namespace Sudoku_Solver
 {
     public class PuzzleSolver
     {
+        List<NumberSquare> originalPuzzle { get; set; }
         PuzzleNumbers puzzle { get; set; }
         PuzzleStructure structure { get; set; }
         bool invalid { get; set; }
@@ -24,8 +25,9 @@ namespace Sudoku_Solver
         List<List<NumberSquare>> mySolution { get; set; }
         int currentDepth { get; set; }
         List<List<NumberSquare>> currentSolvage { get; set; }
+        string output { get; set; }
 
-        public PuzzleSolver(string input, string output)
+        public PuzzleSolver(string input, string output_)
         {
             bool written = false;
             invalid = true;
@@ -37,17 +39,21 @@ namespace Sudoku_Solver
                 possibleSolutions = 0;
                 currentDepth = -1;
                 currentSolvage = new List<List<NumberSquare>>();
+                output = output_;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Invalid Puzzle");
                 Console.WriteLine("Input not correct");
+                Console.Read();
                 invalid = false;
                 written = true;
             }
             InitializeDictionarys();
             if (invalid)
             {
+                originalPuzzle = Clone(puzzle.squares) as List<NumberSquare>;
+                Console.WriteLine("");
                 invalid = Solve();
             }
 
@@ -59,6 +65,7 @@ namespace Sudoku_Solver
             {
                 Console.WriteLine("Invalid Puzzle");
                 Console.WriteLine("Unsolvable");
+                Console.Read();
             }
         }
 
@@ -103,7 +110,6 @@ namespace Sudoku_Solver
         public bool Solve()
         {
             guess = false;
-            Console.WriteLine("");
             //for (int i = 0; i < puzzle.squares.Count; i++)
             //{
               //  Console.Write(puzzle.squares[i].number + " ");
@@ -273,13 +279,23 @@ namespace Sudoku_Solver
         }
 
         public void writePuzzle() {
+            string write = "";
+            for (int i = 0; i < originalPuzzle.Count; i++)
+            {
+                write += originalPuzzle[i].number + " ";
+                if ((i + 1) % puzzle.size == 0)
+                {
+                    write += "\n";
+                }
+            }
+            write += "\n";
             //write the final puzzle
             for (int i = 0; i < puzzle.squares.Count; i++)
             {
-                Console.Write(puzzle.squares[i].number + " ");
+                write += puzzle.squares[i].number + " ";
                 if ((i + 1) % puzzle.size == 0)
                 {
-                    Console.Write("\n");
+                    write += "\n";
                 }
             }
             foreach (KeyValuePair<string, SolutionAlgorithm> pair in algorithms)
@@ -287,13 +303,33 @@ namespace Sudoku_Solver
                 timesUsed["Single Candidate"] += pair.Value.SinglesUsed;
                 totalTime += timeSpent[pair.Key];
             }
-            Console.WriteLine("\nTotal time: " + totalTime / 1000);
+            write += "\nTotal time: " + totalTime / 1000 + "\n";
             for (int i = 0; i < algorithms.Count; i++)
             {
-                Console.WriteLine(names[i] + " - Times Used: " + timesUsed[names[i]] + " - " + timeSpent[names[i]] / 1000 + " seconds");
+                write += names[i] + " - Times Used: " + timesUsed[names[i]] + " - " + timeSpent[names[i]] / 1000 + " seconds\n";
             }
-            Console.WriteLine("Guess - Times Used: " + timesUsed["Guess"] + " - " + timeSpent["Guess"] / 1000 + " seconds");
+            write+= "Guess - Times Used: " + timesUsed["Guess"] + " - " + timeSpent["Guess"] / 1000 + " seconds";
+            if (output == "")
+            {
+                Console.WriteLine(write);
+                Console.Read();
+            }
+            else
+            {
+                try
+                {
+                    File.WriteAllLines(output, write.Split("\n"));
+                    Console.WriteLine("Done");
+                    Console.Read();
+                }
+                catch
+                {
+                    Console.WriteLine(write);
+                    Console.Read();
+                }
+            }
         }
+
         public static object Clone(object obj)
         {
             object objResult = null;

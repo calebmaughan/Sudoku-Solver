@@ -23,8 +23,8 @@ namespace Sudoku_Solver
             return updateSurroundings(squareNumber, puzzle, grid);
         }
 
-        public abstract void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid);
-        public abstract void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid);
-        public abstract bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid);
+        protected abstract void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid);
+        protected abstract void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid);
+        protected abstract bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid);
     }
 }

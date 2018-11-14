@@ -9,7 +9,7 @@ namespace Sudoku_Solver
     {
         Dictionary<int, List<string>> blockRow {get; set;}
 
-        public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             if(squareNum == 13)
             {
@@ -72,7 +72,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             for(int i = 0; i < blockRow.Count; i++)
             {

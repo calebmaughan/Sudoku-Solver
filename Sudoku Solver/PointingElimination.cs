@@ -4,20 +4,20 @@ using System.Text;
 
 namespace Sudoku_Solver
 {
-    public class PointingElimination : SolutionAlgorithm
+    public abstract class PointingElimination : SolutionAlgorithm
     {
         public bool used { get; set; }
-        public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             throw new NotImplementedException();
         }
 
-        public override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             throw new NotImplementedException();
         }
 
-        public override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             if (used)
             {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sudoku_Solver
 {
-    class HiddenPair : SolutionAlgorithm
+    public class HiddenPair : SolutionAlgorithm
     {
         bool used { get; set; }
         bool skip { get; set; }
@@ -13,7 +13,7 @@ namespace Sudoku_Solver
         List<int> colPossible { get; set; }
         List<int> blockPossible { get; set; }
 
-        public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             skip = true;
             if(puzzle.squares[squareNum].number == '-' && puzzle.squares[squareNum].candidates.Count == 2)
@@ -49,7 +49,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             used = false;
             if (!skip)
@@ -110,7 +110,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override bool updateSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             if (!skip)
             {

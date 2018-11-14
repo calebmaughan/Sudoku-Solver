@@ -13,7 +13,6 @@ namespace Sudoku_Solver
             Console.WriteLine("Please enter an output file (or leave empty to display on the console):");
             string output = Console.ReadLine();
             new PuzzleSolver(input, output);
-            Console.Read();
         }
     }
 }

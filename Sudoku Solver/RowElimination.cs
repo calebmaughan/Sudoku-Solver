@@ -9,7 +9,7 @@ namespace Sudoku_Solver
     {
         Dictionary<int, List<string>> rowBlock { get; set; }
 
-        public override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void checkSurroundings(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             used = false;
             Dictionary<string, int> containers = grid.findContainers(squareNum);
@@ -67,7 +67,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
+        protected override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
             for (int i = 0; i < rowBlock.Count; i++)
             {
@@ -92,7 +92,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public void AddRowBlockCandidates(int square, int block, PuzzleNumbers puzzle)
+        private void AddRowBlockCandidates(int square, int block, PuzzleNumbers puzzle)
         {
             for (int i = 0; i < puzzle.squares[square].candidates.Count; i++)
             {
