@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Sudoku_Solver
 {
-    public class PuzzleSolver
+    class PuzzleSolver
     {
         List<NumberSquare> originalPuzzle { get; set; }
         PuzzleNumbers puzzle { get; set; }
