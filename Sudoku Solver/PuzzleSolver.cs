@@ -107,7 +107,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public bool Solve()
+        bool Solve()
         {
             guess = false;
             for (int i = 0; i < puzzle.squares.Count; i++)
@@ -184,7 +184,7 @@ namespace Sudoku_Solver
             return solved;            
         }
 
-        public bool Guess()
+        bool Guess()
         {
             currentDepth++;
             bool returnVal = false;
@@ -268,7 +268,7 @@ namespace Sudoku_Solver
             return returnVal;
         }
 
-        public void writePuzzle() {
+        void writePuzzle() {
             string write = "";
             for (int i = 0; i < originalPuzzle.Count; i++)
             {
@@ -320,7 +320,7 @@ namespace Sudoku_Solver
             }
         }
 
-        public static object Clone(object obj)
+        static object Clone(object obj)
         {
             object objResult = null;
             using (MemoryStream ms = new MemoryStream())
