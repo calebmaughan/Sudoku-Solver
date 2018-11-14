@@ -44,10 +44,13 @@ namespace Sudoku_Solver
 
         protected override void updateCandidates(int squareNum, PuzzleNumbers puzzle, PuzzleStructure grid)
         {
-            for(int i = 0; i < duplicates.Count; i++)
+            if (puzzle.squares[squareNum].number == '-')
             {
-                string candidate = duplicates[i].ToString();
-                puzzle.squares[squareNum].candidates.Remove(candidate);
+                for (int i = 0; i < duplicates.Count; i++)
+                {
+                    string candidate = duplicates[i].ToString();
+                    puzzle.squares[squareNum].candidates.Remove(candidate);
+                }
             }
         }
 

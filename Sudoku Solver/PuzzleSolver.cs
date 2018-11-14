@@ -110,16 +110,6 @@ namespace Sudoku_Solver
         public bool Solve()
         {
             guess = false;
-            //for (int i = 0; i < puzzle.squares.Count; i++)
-            //{
-              //  Console.Write(puzzle.squares[i].number + " ");
-                //if ((i + 1) % puzzle.size == 0)
-                //{
-                  //  Console.Write("\n");
-                //}
-           // }
-            //Console.WriteLine("");
-
             for (int i = 0; i < puzzle.squares.Count; i++)
             {
                 if (puzzle.squares[i].number == '-')
